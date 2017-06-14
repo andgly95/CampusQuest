@@ -3,29 +3,39 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using IsoTools.Physics;
 
+namespace IsoTools.Examples.Kenney{
 public class SceneMover : MonoBehaviour {
 
 	//SerializedField makes the private variable visible in the editor
-	[SerializeField]public string loadLevel;
+	[SerializeField]private string loadLevel;
+		public GameObject player;
+		new Vector3 prevRoomPlayerPos;
 
 	//To use this script, attach it to the collider that you want to be the passage 
 	//between levels. 
 	//Make sure the collider "Is Trigger" is checked.
-	//Add
+	//Add Scenes to the file -> buildsettings
+	// type in what scene the collider should take you to
 
-	void OnIsoTriggerEnter(IsoCollider other)
-	{
-		Debug.Log("Went Through the door.");
-		if (other.gameObject.tag=="Player"){
-			SceneManager.LoadScene (loadLevel); 
-		}
+
+
+	void Start () {
+		
 	}
-	void OnTriggerEnter(Collider other)
-	{
-		Debug.Log("Went Through the door.");
-		if (other.gameObject.tag=="Player"){
-			SceneManager.LoadScene (loadLevel); 
-		}
+	void Update() {
+		
 	}
+
+		void OnIsoTriggerEnter(IsoCollider other){
+			Debug.Log("IsoWent Through the door.");
+			if (other.CompareTag ("Player")) {
+				Debug.Log ("IsoAnd now we transition");
+				SceneManager.LoadScene (loadLevel);
+			} else if (other.CompareTag ("Player")) {
+				Debug.Log ("IsoGoing Back");
+				SceneManager.LoadScene (loadLevel);
+			}
+	}
+}
 }
 

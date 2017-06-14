@@ -9,7 +9,6 @@ namespace IsoTools.Examples.Kenney {
 
 		public float speed = 2.0f;
 		public GameObject player;
-		private Vector3 spawnSpot;
 		private float distToPlayer;
 		IsoRigidbody _isoRigidbody = null;
 
@@ -20,8 +19,6 @@ namespace IsoTools.Examples.Kenney {
 			if (!_isoRigidbody) {
 				throw new UnityException ("EnemyController. IsoRigidbody component not found!");
 			}
-
-			spawnSpot = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		}
 
 		// Update is called once per frame
@@ -34,39 +31,22 @@ namespace IsoTools.Examples.Kenney {
 
 			if (distToPlayer <= 60f) { // we check to see if the player is within range of the enemy
 				// if the player is top right of the enemy
-				//Debug.Log (distToPlayer);
+				Debug.Log (distToPlayer);
 				if (transform.position.x < player.transform.position.x) {
-					velocity.x += 0.8f * speed;
-					velocity.y += -0.8f * speed;
+					velocity.x += 0.8f*speed;
+					velocity.y += -0.8f*speed;
 				}
 				if (transform.position.x > player.transform.position.x) {
-					velocity.x += -0.8f * speed;
-					velocity.y += 0.8f * speed;
+					velocity.x += -0.8f*speed;
+					velocity.y += 0.8f*speed;
 				}
 				if (transform.position.y < player.transform.position.y) {
-					velocity.y += 0.8f * speed;
-					velocity.x += 0.8f * speed;
+					velocity.y += 0.8f*speed;
+					velocity.x += 0.8f*speed;
 				}
 				if (transform.position.y > player.transform.position.y) {
-					velocity.y += -0.8f * speed;
-					velocity.x += -0.8f * speed;
-				}
-			} else {
-				if (transform.position.x < spawnSpot.x - 20) {
-					velocity.x += 0.8f * speed;
-					velocity.y += -0.8f * speed;
-				}
-				if (transform.position.x > spawnSpot.x + 20) {
-					velocity.x += -0.8f * speed;
-					velocity.y += 0.8f * speed;
-				}
-				if (transform.position.y < spawnSpot.y - 20) {
-					velocity.y += 0.8f * speed;
-					velocity.x += 0.8f * speed;
-				}
-				if (transform.position.y > spawnSpot.y + 20) {
-					velocity.y += -0.8f * speed;
-					velocity.x += -0.8f * speed;
+					velocity.y += -0.8f*speed;
+					velocity.x += -0.8f*speed;
 				}
 			}
 			_isoRigidbody.velocity = velocity;
@@ -77,16 +57,6 @@ namespace IsoTools.Examples.Kenney {
 			if(iso_collision.gameObject.tag == "Player"){
 				Debug.Log ("Switch to battle scene!");
 			}
-
-		}
-
-		void DestroyEnemy(){
-			Destroy (gameObject);
-		}
-
-		// A method to DEBUG the OverworldEnemy object
-		void SomeMethod(){
-			Debug.Log("MSG");
 		}
 
 		// same function as above, we dont need this
@@ -95,9 +65,9 @@ namespace IsoTools.Examples.Kenney {
 		}*/
 
 		void DistToPlayer(GameObject Player){
-			//Debug.Log ("DistToPlayer called");
+			Debug.Log ("DistToPlayer called");
 			distToPlayer = Mathf.Sqrt (Mathf.Pow (transform.position.x - player.transform.position.x, 2f) + Mathf.Pow (transform.position.y - player.transform.position.y, 2f));
-			//Debug.Log (distToPlayer);
+			Debug.Log (distToPlayer);
 		}
 
 	}
