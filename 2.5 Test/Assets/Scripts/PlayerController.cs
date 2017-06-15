@@ -6,7 +6,7 @@ namespace IsoTools.Examples.Kenney {
 	public class PlayerController : MonoBehaviour {
 
 		public float speed = 2.0f;
-		public GameObject player;
+		//public GameObject player;
 		private bool isGrounded;
 
 		IsoRigidbody _isoRigidbody = null;

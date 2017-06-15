@@ -17,6 +17,7 @@ public class PlayerSave : MonoBehaviour {
 			GameController.gameController.playerPositionX = transform.position.x;
 			GameController.gameController.playerPositionY = transform.position.y;
 			GameController.gameController.playerPositionZ = transform.position.z;
+			//Debug.Log (GameController.gameController.playerPositionX);	
 
 		}
 
