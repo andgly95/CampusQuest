@@ -264,6 +264,7 @@
 'Assets/IsoTools/Scripts/IsoObject.cs'
 'Assets/IsoTools/Scripts/IsoParent.cs'
 'Assets/IsoTools/Scripts/IsoWorld.cs'
+'Assets/Scripts/BattleEnemyScript.cs'
 'Assets/Scripts/CameraController.cs'
 'Assets/Scripts/GameController.cs'
 'Assets/Scripts/LoadMover.cs'

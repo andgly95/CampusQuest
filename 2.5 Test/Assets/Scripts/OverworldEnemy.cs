@@ -3,11 +3,11 @@
 using UnityEngine;
 using IsoTools.Physics;
 
-namespace IsoTools.Examples.Kenney {
+//namespace IsoTools.Examples.Kenney {
 	[RequireComponent(typeof(IsoTriggerListener), typeof(IsoCollisionListener))]
 	public class OverworldEnemy : MonoBehaviour {
 
-		public float speed = 2.0f;
+		public float speed;
 		private Transform player;
 		private Vector3 spawnSpot;
 		private float distToPlayer;
@@ -82,7 +82,10 @@ namespace IsoTools.Examples.Kenney {
 		void OnIsoCollisionEnter(IsoCollision iso_collision) {
 			if(iso_collision.gameObject.tag == "Player"){
 				Debug.Log ("Switch to battle scene!");
+				DestroyEnemy ();
 			}
+
+
 		}
 
 		void DestroyEnemy(){
@@ -108,4 +111,4 @@ namespace IsoTools.Examples.Kenney {
 		}
 
 	}
-}
+//}
