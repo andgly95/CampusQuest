@@ -5,24 +5,29 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
+
 public class GameController : MonoBehaviour {
 
 	public static GameController gameController;
+
 
 	public float playerPositionX;
 	public float playerPositionY;
 	public float playerPositionZ;
 
+
 	void Awake (){
+		Debug.Log ("GameController Awake");
 		// this is called a singleton manager
 		// if there is no gameController then
 		if (gameController == null) {
 			DontDestroyOnLoad (gameObject);
+			//DontDestroyOnLoad (player);
 			//set the gameController to this instance of the GameController class
 			gameController = this;
 		} else if (gameController != this) {
 			Destroy (gameObject);
-		}
+		} 
 	}
 
 	public void Save(){
@@ -44,6 +49,13 @@ public class GameController : MonoBehaviour {
 	public void Load(){
 		if (File.Exists (Application.persistentDataPath + "/playerInfo.dat")) {
 			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+			PlayerData data = (PlayerData)bf.Deserialize (file);
+			file.Close ();
+			playerPositionX = data.playerPosX;
+			playerPositionY = data.playerPosY;
+			playerPositionZ = data.playerPosZ;
+			Debug.Log ("X: " + playerPositionX + " Y: " + playerPositionY + " Z: " + playerPositionZ);
 		}
 	}
 

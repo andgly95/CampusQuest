@@ -8,7 +8,7 @@ namespace IsoTools.Examples.Kenney {
 	public class OverworldEnemy : MonoBehaviour {
 
 		public float speed = 2.0f;
-		public GameObject player;
+		private Transform player;
 		private Vector3 spawnSpot;
 		private float distToPlayer;
 		IsoRigidbody _isoRigidbody = null;
@@ -22,10 +22,16 @@ namespace IsoTools.Examples.Kenney {
 			}
 
 			spawnSpot = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+			GetPlayer ();
 		}
 
 		// Update is called once per frame
 		void Update () {
+
+			if (player == null) {
+				GetPlayer ();
+			}
+
 			var velocity = _isoRigidbody.velocity;
 			DistToPlayer (player);
 
@@ -77,7 +83,6 @@ namespace IsoTools.Examples.Kenney {
 			if(iso_collision.gameObject.tag == "Player"){
 				Debug.Log ("Switch to battle scene!");
 			}
-
 		}
 
 		void DestroyEnemy(){
@@ -89,15 +94,17 @@ namespace IsoTools.Examples.Kenney {
 			Debug.Log("MSG");
 		}
 
-		// same function as above, we dont need this
-		/*void OnCollisionEnter2D(Collision2D col) {
-			//Debug.Log ("Collision2D");
-		}*/
-
-		void DistToPlayer(GameObject Player){
-			//Debug.Log ("DistToPlayer called");
+		void DistToPlayer(Transform player){
 			distToPlayer = Mathf.Sqrt (Mathf.Pow (transform.position.x - player.transform.position.x, 2f) + Mathf.Pow (transform.position.y - player.transform.position.y, 2f));
-			//Debug.Log (distToPlayer);
+		}
+
+		void GetPlayer(){
+			GameObject[] gObjs = UnityEngine.Object.FindObjectsOfType <GameObject> ();
+			foreach (GameObject g in gObjs) {
+				if (g.CompareTag ("Player")) {
+					player = g.transform;
+				}
+			}
 		}
 
 	}
