@@ -8,6 +8,10 @@ namespace IsoTools.Examples.Kenney {
 		public static PlayerController playerController;
 		private IsoWorld _IsoWorld;
 		public float speed = 2.0f;
+<<<<<<< HEAD
+=======
+		//public GameObject player;
+>>>>>>> cba464fa0749a197a09df2560045ce5413920656
 		private bool isGrounded;
 		GameObject player;
 
