@@ -50,7 +50,6 @@ public class GameController : MonoBehaviour {
 	public void Load(){
 		if (File.Exists (Application.persistentDataPath + "/playerInfo.dat")) {
 			BinaryFormatter bf = new BinaryFormatter ();
-<<<<<<< HEAD
 			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
 			PlayerData data = (PlayerData)bf.Deserialize (file);
 			file.Close ();
@@ -58,16 +57,12 @@ public class GameController : MonoBehaviour {
 			playerPositionY = data.playerPosY;
 			playerPositionZ = data.playerPosZ;
 			Debug.Log ("X: " + playerPositionX + " Y: " + playerPositionY + " Z: " + playerPositionZ);
-=======
-			FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
 
-			PlayerData data = (PlayerData)bf.Deserialize (file);
 			file.Close ();
 
 			playerPositionX = data.playerPosX;
 			playerPositionY = data.playerPosY;
 			playerPositionZ = data.playerPosZ;
->>>>>>> cba464fa0749a197a09df2560045ce5413920656
 		}
 	}
 

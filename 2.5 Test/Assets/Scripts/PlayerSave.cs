@@ -21,15 +21,14 @@ public class PlayerSave : MonoBehaviour {
 			GameController.gameController.playerPositionY = _isoObject.position.y;
 			GameController.gameController.playerPositionZ = _isoObject.position.z;
 			GameController.gameController.Save ();
-<<<<<<< HEAD
+
 			Debug.Log ("Saving: X: " + GameController.gameController.playerPositionX + " Y: " + GameController.gameController.playerPositionY + " Z: " + GameController.gameController.playerPositionZ);
-=======
+
 			GameController.gameController.playerPositionX = transform.position.x;
 			GameController.gameController.playerPositionY = transform.position.y;
 			GameController.gameController.playerPositionZ = transform.position.z;
 			//Debug.Log (GameController.gameController.playerPositionX);	
 
->>>>>>> cba464fa0749a197a09df2560045ce5413920656
 		}
 
 		if (Input.GetButtonDown ("Load")) {
