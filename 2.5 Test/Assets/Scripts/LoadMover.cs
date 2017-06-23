@@ -37,7 +37,7 @@ public class LoadMover : MonoBehaviour {
 		foreach (GameObject g in gObjs) {
 			if (g.tag == "IsoWorld") {
 				_prevIsoWorld = g.GetComponent<Transform> ();
-				Debug.Log ("_prevIsoWorld is now " + _prevIsoWorld);
+				//Debug.Log ("_prevIsoWorld is now " + _prevIsoWorld);
 			}
 			//((_prevIsoWorld as Transform).gameObject).SetActive (true);
 		}
@@ -74,7 +74,7 @@ public class LoadMover : MonoBehaviour {
 		}
 	}
 
-	void gameObjectLister(){
+	void gameObjectLister(){ // a debugging function ignore
 		GameObject[] gObjs = UnityEngine.Object.FindObjectsOfType <GameObject>();
 		foreach (GameObject g in gObjs) {
 			if (g.activeInHierarchy)
@@ -84,7 +84,6 @@ public class LoadMover : MonoBehaviour {
 	}
 
 	void OnIsoTriggerEnter(IsoCollider other) {
-		Debug.Log ("load is: " + load);
 		if (other.CompareTag( "Player")) { 
 			_prevIsoWorld = player.transform.parent; //<- I think we're dangerously assigning _prevIsoWorld too many times 
 			if (!load) {

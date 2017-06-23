@@ -85,7 +85,7 @@ namespace IsoTools.Examples.Kenney {
 			}
 		}
 
-		void DestroyEnemy(){
+		public void DestroyEnemy(){
 			Destroy (gameObject);
 		}
 
