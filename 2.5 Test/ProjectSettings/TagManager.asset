@@ -12,6 +12,7 @@ TagManager:
   - IsoWorld
   - PlayerSprite
   - Weapon
+  - WeaponCollider
   layers:
   - Default
   - TransparentFX
