@@ -10,10 +10,7 @@ public class PlayerAttack : MonoBehaviour {
 	private float attackCd = 0.3f;
 
 	private Transform player;
-	private GameObject attackTriggerGameObject;
 	public IsoBoxCollider attackTrigger;
-
-	private Animator weaponAnimator; //Does nothing at this point
 
 	void Awake() {
 		attackTrigger.enabled = false;

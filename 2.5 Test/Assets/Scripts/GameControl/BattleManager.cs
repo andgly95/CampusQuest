@@ -18,9 +18,11 @@ public class BattleManager : MonoBehaviour {
 	private int battleSceneIndex;
 	private int returningSceneIndex;
 
-	bool battling;
-
 	GameObject player;
+	public static GameObject[] enemyList;
+
+	//public static bool victory;
+
 	IsoObject _isoPlayer;
 
 	Transform _prevIsoWorld;
@@ -28,18 +30,22 @@ public class BattleManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		AttackTrigger.battle = true;
+		//victory = false;
+
 		returningSceneIndex = BattleTrans.prevSceneIndex;
-		battling = true;
+
 		prevIsoWorldFinder ();
 		GetPlayer ();
-		_isoPlayer = player.gameObject.GetComponent<IsoObject> ();
+
+		_isoPlayer = player.gameObject.GetComponent<IsoObject> (); // puts player at starting position
 		_isoPlayer.position = new Vector3 (battlePosX, battlePosY, battlePosZ);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	// if the battle started
-		if (battling) {// count the number of enemies, if 0
+		if (AttackTrigger.battle) {// count the number of enemies, if 0
 			enemyCounter ();// send us back to original scene at original position
 		}
 	}
@@ -47,7 +53,8 @@ public class BattleManager : MonoBehaviour {
 	void enemyCounter() {
 		GameObject[] enemyList = GameObject.FindGameObjectsWithTag ("Enemy");
 		if (enemyList.Length == 0) {
-			battling = false;
+			//victory = true;
+			AttackTrigger.battle = false;
 			StartCoroutine (ChangeSceneBack ());
 		}
 	}
@@ -61,15 +68,16 @@ public class BattleManager : MonoBehaviour {
 		SceneManager.LoadScene (returningSceneIndex, LoadSceneMode.Additive);
 
 		Scene nextScene = SceneManager.GetSceneAt (1); 
-		//Debug.Log ("Next Scene Index " + nextScene.buildIndex); //yes this is the correct scene
-		Debug.Log("Player has been deparented" + player);
+
 		SceneManager.MoveGameObjectToScene(player, nextScene);
 
 		_isoPlayer.position = new Vector3 (b4BattlePosX, b4BattlePosY, b4BattlePosZ); // this line places the player back in the same position that they
 		// were before the battle started
 
 		yield return null;
-		SceneManager.UnloadSceneAsync (battleSceneIndex); 
+		SceneManager.UnloadSceneAsync (battleSceneIndex);
+		OverWorldManager.enemyFighting.script.battleStarting = false;
+
 
 	}
 
@@ -87,6 +95,7 @@ public class BattleManager : MonoBehaviour {
 		currIsoWorldFinder();
 
 		player.transform.parent = _currIsoWorld.transform;
+
 		_isoPlayer.position = new Vector3 (BattleTrans.b4BattlePosX, BattleTrans.b4BattlePosY, BattleTrans.b4BattlePosZ);
 
 		_prevIsoWorld.gameObject.SetActive (true);
@@ -102,7 +111,6 @@ public class BattleManager : MonoBehaviour {
 		Transform[] ts = _prevIsoWorld.gameObject.GetComponentsInChildren<Transform> ();
 		foreach (Transform t in ts) {
 			if (t.gameObject.CompareTag ("Player")) {
-				//Debug.Log ("We have the player " + t);
 				player = t.gameObject;
 			}
 		}

@@ -13,14 +13,14 @@ public class BattleTrans : MonoBehaviour {
 	private int nextSceneIndex = 4;
 	private int returningSceneIndex;
 
-
 	public static float b4BattlePosX;
 	public static float b4BattlePosY;
 	public static float b4BattlePosZ;
 
+	public GameObject enemy;
 
 	bool load;
-	bool battling = false;
+	public bool battleStarting;
 
 	GameObject player;
 	IsoObject _isoPlayer;
@@ -30,9 +30,11 @@ public class BattleTrans : MonoBehaviour {
 
 
 	void Start() {
+		battleStarting = false; //gets changed to true in OnIsoTriggerEnter
+		enemy = gameObject; // logs the enemy that initiates a battle sequence for the OverWorld Manager script
+							// for deletion if the player wins the battle;
 
 		GameObject[] gObjs = UnityEngine.Object.FindObjectsOfType <GameObject>();
-
 		foreach (GameObject g in gObjs) {
 			if (g.tag == "IsoWorld") {
 				_prevIsoWorld = g.GetComponent<Transform> ();
@@ -46,7 +48,6 @@ public class BattleTrans : MonoBehaviour {
 		Transform[] ts = _prevIsoWorld.gameObject.GetComponentsInChildren<Transform> ();
 		foreach (Transform t in ts) {
 			if (t.gameObject.CompareTag ("Player")) {
-				//Debug.Log ("We have the player " + t);
 				player = t.gameObject;
 			}
 		}
@@ -77,11 +78,10 @@ public class BattleTrans : MonoBehaviour {
 				Debug.Log ("Game Objects Are: " + g);
 		}
 	}
-
-
-
-	void OnIsoTriggerEnter(IsoCollider other) { //This function takes us into the battle scene
+		
+ 	public void OnIsoTriggerEnter(IsoCollider other) { //This function takes us into the battle scene
 		if (other.CompareTag( "Weapon")) { 
+			battleStarting = true;
 			_prevIsoWorld = player.transform.parent;
 			if (!load) {
 				load = true;
@@ -110,8 +110,8 @@ public class BattleTrans : MonoBehaviour {
 		SceneManager.MoveGameObjectToScene(player, nextScene);// gameObject refers to whatever gameobject this script is attached to
 
 		yield return null;
-		SceneManager.UnloadSceneAsync (prevSceneIndex); //This line destroys everything in the old scene if it hasnt been moved over.
-		// Only works in one direction though.
+		SceneManager.UnloadSceneAsync (prevSceneIndex);
+		PlayerView.facingThisEnemy = null;
 	}
 
 	void OnEnable() {
@@ -122,8 +122,6 @@ public class BattleTrans : MonoBehaviour {
 	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
 
 		Debug.Log ("Active scene is " + scene.name + ".");
-
-		// logs the new room :)
 
 		_prevIsoWorld.gameObject.SetActive(false); // Even after destroying this object it is still listed as active, so i set it to inactive
 		Destroy((_prevIsoWorld as Transform).gameObject); //So that deletes the old IsoWorld

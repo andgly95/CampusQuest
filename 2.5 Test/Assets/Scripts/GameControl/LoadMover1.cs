@@ -25,7 +25,6 @@ public class LoadMover1 : MonoBehaviour {
 
 	void Awake() {
 		GameObject player = GameObject.FindGameObjectsWithTag ("Player") [0];
-
 	}
 
 
@@ -107,8 +106,7 @@ public class LoadMover1 : MonoBehaviour {
 		SceneManager.MoveGameObjectToScene(player, nextScene);// gameObject refers to whatever gameobject this script is attached to
 
 		yield return null;
-		SceneManager.UnloadSceneAsync (prevSceneIndex); //This line destroys everything in the old scene if it hasnt been moved over.
-															// Only works in one direction though.
+		SceneManager.UnloadSceneAsync (prevSceneIndex);
 	}
 
 	void OnEnable() {
