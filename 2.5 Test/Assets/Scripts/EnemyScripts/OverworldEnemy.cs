@@ -6,14 +6,15 @@ using IsoTools.Physics;
 public class OverworldEnemy : MonoBehaviour {
 
 	public float speed = 2.0f;
+	public int index;
 	private Transform player;
 	private Vector3 spawnSpot;
 	private float distToPlayer;
 	IsoRigidbody _isoRigidbody = null;
+	public bool battling;
 
 	// Use this for initialization
 	void Start () {
-		//FindObjectOfType<IsoBoxCollider> ();
 		_isoRigidbody = GetComponent<IsoRigidbody> ();
 		if (!_isoRigidbody) {
 			throw new UnityException ("EnemyController. IsoRigidbody component not found!");
@@ -21,6 +22,7 @@ public class OverworldEnemy : MonoBehaviour {
 
 		spawnSpot = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		GetPlayer ();
+		battling = false;
 	}
 
 	// Update is called once per frame
@@ -89,9 +91,9 @@ public class OverworldEnemy : MonoBehaviour {
 		distToPlayer = Mathf.Sqrt (Mathf.Pow (transform.position.x - player.transform.position.x, 2f) + Mathf.Pow (transform.position.y - player.transform.position.y, 2f));
 	}
 
-	void OnIsoCollisionEnter(IsoCollision iso_collision) {
-		if(iso_collision.gameObject.tag == "Player"){
-			//Enter code here
+	void OnIsoTriggerEnter(IsoCollider other) { //This function takes us into the battle scene
+		if (other.CompareTag ("Weapon")) { 
+			battling = true;
 		}
 	}
 

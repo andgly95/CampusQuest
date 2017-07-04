@@ -107,6 +107,7 @@ public class LoadMover1 : MonoBehaviour {
 
 		yield return null;
 		SceneManager.UnloadSceneAsync (prevSceneIndex);
+		OverWorldManager.defeatedEnemyIndexes = new List<int> (); // flush the defeated enemy index
 	}
 
 	void OnEnable() {

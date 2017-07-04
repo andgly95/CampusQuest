@@ -17,10 +17,9 @@ public class BattleTrans : MonoBehaviour {
 	public static float b4BattlePosY;
 	public static float b4BattlePosZ;
 
-	public GameObject enemy;
+
 
 	bool load;
-	public bool battleStarting;
 
 	GameObject player;
 	IsoObject _isoPlayer;
@@ -30,9 +29,6 @@ public class BattleTrans : MonoBehaviour {
 
 
 	void Start() {
-		battleStarting = false; //gets changed to true in OnIsoTriggerEnter
-		enemy = gameObject; // logs the enemy that initiates a battle sequence for the OverWorld Manager script
-							// for deletion if the player wins the battle;
 
 		GameObject[] gObjs = UnityEngine.Object.FindObjectsOfType <GameObject>();
 		foreach (GameObject g in gObjs) {
@@ -81,7 +77,6 @@ public class BattleTrans : MonoBehaviour {
 		
  	public void OnIsoTriggerEnter(IsoCollider other) { //This function takes us into the battle scene
 		if (other.CompareTag( "Weapon")) { 
-			battleStarting = true;
 			_prevIsoWorld = player.transform.parent;
 			if (!load) {
 				load = true;

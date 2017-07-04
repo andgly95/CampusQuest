@@ -21,7 +21,7 @@ public class BattleManager : MonoBehaviour {
 	GameObject player;
 	public static GameObject[] enemyList;
 
-	//public static bool victory;
+	public static bool victory;
 
 	IsoObject _isoPlayer;
 
@@ -31,7 +31,7 @@ public class BattleManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		AttackTrigger.battle = true;
-		//victory = false;
+		victory = false;
 
 		returningSceneIndex = BattleTrans.prevSceneIndex;
 
@@ -55,6 +55,7 @@ public class BattleManager : MonoBehaviour {
 		if (enemyList.Length == 0) {
 			//victory = true;
 			AttackTrigger.battle = false;
+			victory = true;
 			StartCoroutine (ChangeSceneBack ());
 		}
 	}
@@ -76,9 +77,8 @@ public class BattleManager : MonoBehaviour {
 
 		yield return null;
 		SceneManager.UnloadSceneAsync (battleSceneIndex);
-		OverWorldManager.enemyFighting.script.battleStarting = false;
-
-
+		OverWorldManager.enemyFighting.script.battling = false;
+		victory = false;
 	}
 
 	void OnEnable() {

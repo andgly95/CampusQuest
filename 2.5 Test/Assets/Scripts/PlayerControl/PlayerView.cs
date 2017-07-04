@@ -15,7 +15,7 @@ public class PlayerView : MonoBehaviour {
 
 	Vector3 boxPosition; // This one resets to the player position in update to avoid letting the collider run away
 
-	public static bool facingAnEnemy;
+	public static bool facingSomething;
 	public static GameObject facingThisEnemy; // Public Static because Enemy healthScript will reach into this script and grab is assigned value
 	private Vector3 _isoPlayerPos;
 	private Vector3 direction;
@@ -89,12 +89,19 @@ public class PlayerView : MonoBehaviour {
 				direction = _isoRigidbody.velocity;
 			}
 		}
-		Ray ray = new Ray(_isoPlayerPos, direction);
-		IsoRaycastHit hit;
-		//facingAnEnemy = IsoPhysics.Raycast(ray, out hit, max_distance: 5);
-		facingAnEnemy = IsoPhysics.SphereCast(_isoPlayerPos, 0.3f, direction, out hit, max_distance: 3); // Spherecast is a thicc raycast
+		if (AttackTrigger.battle) {
+			Ray ray = new Ray (_isoPlayerPos, direction);
+			IsoRaycastHit hit;
+			facingSomething = IsoPhysics.SphereCast (_isoPlayerPos, 0.5f, direction, out hit, max_distance: 3); // Spherecast is a thicc raycast
+			//***wait, this returns true if the character is facing anything...
+			if (facingSomething == true) {
+				if (hit.collider.gameObject.tag == "Enemy") //may cause problems if we dont do a tag check.
+					facingThisEnemy = hit.collider.gameObject;
+			} else {
+				facingThisEnemy = null;
+			}
 
-		facingThisEnemy = hit.collider.gameObject;
+		}
 	}
 }
 

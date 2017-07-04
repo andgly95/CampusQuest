@@ -21,8 +21,6 @@ public class GameController : MonoBehaviour {
 		// if there is no gameController then
 		if (gameController == null) {
 			DontDestroyOnLoad (gameObject);
-			//DontDestroyOnLoad (player);
-			//set the gameController to this instance of the GameController class
 			gameController = this;
 		} else if (gameController != this) {
 			Destroy (gameObject);

@@ -8,7 +8,7 @@ public class EnemyStats : MonoBehaviour {
 
 	public int enemyHealth= 30;
 	public int maxEnemyHealth= 30;
-
+	private GameObject enemy;
 	// Use this for initialization
 	void Start () {
 		enemyHealth = 30;
@@ -19,6 +19,7 @@ public class EnemyStats : MonoBehaviour {
 	void Update () {
 		if (enemyHealth <= 0) {
 			Destroy (gameObject); //  will need a death animation to play
+
 		}
 	}
 
